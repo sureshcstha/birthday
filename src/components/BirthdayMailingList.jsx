@@ -55,9 +55,9 @@ const BirthdayMailingList = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-md w-96">
-        <h2 className="text-xl font-bold">Join My Birthday Mailing List</h2>
+    <div className="flex flex-col justify-center items-center py-6 bg-gray-100 sm:h-screen">
+      <div className="bg-white p-6 rounded-lg shadow-md max-w-sm w-full">
+        <h2 className="text-base font-bold sm:text-xl">Join My Birthday Mailing List 🎉</h2>
         <p className="text-gray-700">Want to receive a birthday email in your inbox? Add your details, and I'll send you a special email on your birthday!</p>
         <form onSubmit={handleSubmit} className="mt-4">
           <input

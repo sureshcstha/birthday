@@ -19,14 +19,14 @@ const Unsubscribe = () => {
                 .then((res) => res.json())
                 .then((data) => {
                     if (data.user) {
-                        setMessage("You have been resubscribed to the email list.");
+                        setMessage("You're resubscribed! Looking forward to celebrating with you! 🎂🎈");
                     } else {
                         setMessage(data.message || "An error occurred while resubscribing.");
                     }
                 })
                 .catch(() => setMessage("An error occurred while resubscribing."));
         } else if (status === "success") {
-            setMessage("You have successfully unsubscribed from birthday emails.");
+            setMessage("Unsubscribed! 😢 No more birthday messages, but we'll always be cheering for you!");
         } else if (status === "not_found") {
             setMessage("User not found. Please check the link or contact support.");
         } else {
@@ -35,7 +35,7 @@ const Unsubscribe = () => {
     }, [status, resubscribe, userId]);
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <div className="flex flex-col items-center min-h-screen bg-gray-100 px-4 py-10 sm:py-20">
             <div className="bg-white p-6 rounded-lg shadow-lg text-center">
                 <h2 className="text-2xl font-semibold text-red-600">{message}</h2>
                 {resubscribe !== "true" && userId && (
