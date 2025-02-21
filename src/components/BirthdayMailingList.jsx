@@ -47,14 +47,20 @@ const BirthdayMailingList = () => {
       if (response.ok) {
         setResponseMessage("✅ Your email has been added to my birthday mailing list! 🚀");
         setFormData({ firstName: "", lastName: "", birthdate: "", email: "", phone: "" });
+        setErrors({});
         setTimeout(() => setResponseMessage(""), 5000);
       } else {
-        // Check if the error is about a duplicate email
-        if (data.error && data.error.includes("Email is already in use")) {
-          setErrors({ email: "⚠️ This email is already registered. Please use a different email." });
-        } else {
-          setResponseMessage("❌ Error adding user.");
+        // Handle duplicate email and phone errors
+        let newErrors = {};
+        if (data.error) {
+            if (data.error.includes("Email is already in use")) {
+              newErrors.email = "⚠️ This email is already registered. Please use a different email.";
+            }
+            if (data.error.includes("Phone number is already in use")) {
+              newErrors.phone = "⚠️ This phone number is already registered. Please use a different phone number.";
+            }
         }
+        setErrors(newErrors);
       }
     } catch {
       setResponseMessage("❌ Error connecting to server.");
@@ -75,7 +81,7 @@ const BirthdayMailingList = () => {
             onChange={handleChange}
             className="w-full p-2 border rounded-md mb-2"
           />
-          {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
+          {errors.firstName && <p className="text-red-500 text-sm mb-2">{errors.firstName}</p>}
           
           <input
             type="text"
@@ -94,7 +100,7 @@ const BirthdayMailingList = () => {
             onChange={handleChange}
             className="w-full p-2 border rounded-md mb-2"
           />
-          {errors.birthdate && <p className="text-red-500 text-sm">{errors.birthdate}</p>}
+          {errors.birthdate && <p className="text-red-500 text-sm mb-2">{errors.birthdate}</p>}
           
           <input
             type="email"
@@ -104,7 +110,7 @@ const BirthdayMailingList = () => {
             onChange={handleChange}
             className="w-full p-2 border rounded-md mb-2"
           />
-          {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
+          {errors.email && <p className="text-red-500 text-sm mb-2">{errors.email}</p>}
           
           <input
             type="tel"
@@ -114,7 +120,7 @@ const BirthdayMailingList = () => {
             onChange={handleChange}
             className="w-full p-2 border rounded-md mb-2"
           />
-          {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
+          {errors.phone && <p className="text-red-500 text-sm mb-2">{errors.phone}</p>}
           
           <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded-md mt-2 hover:bg-blue-800">Submit</button>
         </form>
