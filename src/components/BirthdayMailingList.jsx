@@ -42,12 +42,19 @@ const BirthdayMailingList = () => {
         body: JSON.stringify({ ...formData, phone: `+1${formData.phone}` })
       });
 
+      const data = await response.json(); // Parse JSON response
+
       if (response.ok) {
         setResponseMessage("✅ Your email has been added to my birthday mailing list! 🚀");
         setFormData({ firstName: "", lastName: "", birthdate: "", email: "", phone: "" });
         setTimeout(() => setResponseMessage(""), 5000);
       } else {
-        setResponseMessage("❌ Error adding user.");
+        // Check if the error is about a duplicate email
+        if (data.error && data.error.includes("Email is already in use")) {
+          setErrors({ email: "⚠️ This email is already registered. Please use a different email." });
+        } else {
+          setResponseMessage("❌ Error adding user.");
+        }
       }
     } catch {
       setResponseMessage("❌ Error connecting to server.");
