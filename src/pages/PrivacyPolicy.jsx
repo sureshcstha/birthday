@@ -1,7 +1,7 @@
 const PrivacyPolicy = () => (
     <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg">
       <h1 className="text-2xl font-bold mb-4">Privacy Policy</h1>
-      <p className="text-gray-600 mb-4">Last updated: February 20, 2025</p>
+      <p className="text-gray-600 mb-4">Last updated: February 21, 2025</p>
       
       <section className="mb-4">
         <p className="text-gray-700">
@@ -19,7 +19,7 @@ const PrivacyPolicy = () => (
           <li>Last Name (Optional, up to 50 characters)</li>
           <li>Birthdate (Required)</li>
           <li>Email Address (Required, unique, up to 100 characters)</li>
-          <li>Phone Number (Required, unique, up to 15 characters)</li>
+          <li>Phone Number (Optional, unique, up to 15 characters)</li>
           <li>Subscription Status (Whether you are subscribed to our service)</li>
           <li>Account Creation Date</li>
         </ul>
