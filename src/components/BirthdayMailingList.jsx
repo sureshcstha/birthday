@@ -45,7 +45,9 @@ const BirthdayMailingList = () => {
     } else if (!formData.email.match(/^\S+@\S+\.\S+$/)) {
       errors.email = "Enter a valid email.";
     }
-    if (formData.phone && !formData.phone.match(/^\d{10}$/)) {
+    if (!formData.phone.trim()) {
+      errors.phone = "Phone number is required.";
+    } else if (!formData.phone.match(/^\d{10}$/)) {
       errors.phone = "Enter a valid 10-digit phone number.";
     }
     setErrors(errors);
@@ -67,7 +69,7 @@ const BirthdayMailingList = () => {
           lastName: formData.lastName,
           birthdate,
           email: formData.email,
-          phone: formData.phone ? `+1${formData.phone}` : "",
+          phone: `+1${formData.phone}`,
         }),
       });
 
@@ -170,7 +172,7 @@ const BirthdayMailingList = () => {
           <input
             type="tel"
             id="phone"
-            placeholder="Phone Number (optional)"
+            placeholder="Phone Number"
             value={formData.phone}
             onChange={handleChange}
             className="w-full p-2 border rounded-md mb-2"

@@ -19,7 +19,7 @@ const PrivacyPolicy = () => (
           <li>Last Name (Optional, up to 50 characters)</li>
           <li>Birthdate (Required)</li>
           <li>Email Address (Required, unique, up to 100 characters)</li>
-          <li>Phone Number (Optional, unique, up to 15 characters)</li>
+          <li>Phone Number (Required, unique, up to 15 characters)</li>
           <li>Subscription Status (Whether you are subscribed to our service)</li>
           <li>Account Creation Date</li>
         </ul>
@@ -76,7 +76,7 @@ const PrivacyPolicy = () => (
         <h2 className="text-xl font-semibold">Contact Us</h2>
         <p className="text-gray-700">
           If you have any questions about this Privacy Policy, please contact us at
-          <a href="mailto:sureshcstha@gmail.com" className="text-blue-600 hover:underline"> sureshcstha@gmail.com</a>.
+          <a href="mailto:sureshshr91@gmail.com" className="text-blue-600 hover:underline"> sureshshr91@gmail.com</a>.
         </p>
       </section>
     </div>
