@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const BirthdayMailingList = () => {
+  const navigate = useNavigate(); 
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -86,7 +89,11 @@ const BirthdayMailingList = () => {
           phone: "",
         });
         setErrors({});
-        setTimeout(() => setResponseMessage(""), 5000);
+        
+        // Redirect to Thank You page after 2 seconds
+        setTimeout(() => {
+          navigate("/thank-you");
+        }, 2000);
       } else {
         // Handle duplicate email and phone errors
         let newErrors = {};
