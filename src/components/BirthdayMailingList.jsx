@@ -187,6 +187,7 @@ const BirthdayMailingList = () => {
           {errors.phone && <p className="text-red-500 text-sm mb-2">{errors.phone}</p>}
 
           <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded-md mt-2 hover:bg-blue-800">Submit</button>
+          <p className="text-gray-700 text-sm mt-2">By clicking &lsquo;Submit&rsquo;, you agree to receive email messages.</p>
         </form>
         <p className="text-center text-green-600 mt-2">{responseMessage}</p>
       </div>
