@@ -1,19 +1,24 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 const BirthdayMailingList = () => {
   const navigate = useNavigate(); 
 
-  const [formData, setFormData] = useState({
+  const initialState = {
     firstName: "",
     lastName: "",
     birthMonth: "",
     birthDay: "",
     email: "",
     phone: ""
-  });
+  };
+  
+  const [formData, setFormData] = useState(initialState);
   const [responseMessage, setResponseMessage] = useState("");
   const [errors, setErrors] = useState({});
+  const [recaptchaReady, setRecaptchaReady] = useState(false);
 
   const months = [
     "January", "February", "March", "April", "May", "June",
@@ -25,6 +30,19 @@ const BirthdayMailingList = () => {
     if (month === "February") return 29; // Considering leap year possibility
     return 31;
   };
+
+  useEffect(() => {
+    // Ensure reCAPTCHA script is ready
+    const interval = setInterval(() => {
+      if (window.grecaptcha?.execute) {
+        setRecaptchaReady(true);
+        clearInterval(interval);
+      }
+    }, 500);
+    
+    return () => clearInterval(interval);
+  }, []);
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -57,13 +75,24 @@ const BirthdayMailingList = () => {
     return Object.keys(errors).length === 0;
   };
 
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
+    setLoading(true);
+
+    if (!recaptchaReady) {
+      setResponseMessage("⚠️ reCAPTCHA is not ready. Please wait.");
+      return;
+    }
 
     const birthdate = `2000-${String(months.indexOf(formData.birthMonth) + 1).padStart(2, '0')}-${String(formData.birthDay).padStart(2, '0')}`;
 
     try {
+      // Get reCAPTCHA token from Google
+      const recaptchaToken = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: "submit" });
+
       const response = await fetch("https://bday-787u.onrender.com/users/add", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -73,6 +102,7 @@ const BirthdayMailingList = () => {
           birthdate,
           email: formData.email,
           phone: `+1${formData.phone}`,
+          recaptchaToken,
         }),
       });
 
@@ -80,14 +110,7 @@ const BirthdayMailingList = () => {
 
       if (response.ok) {
         setResponseMessage("✅ Your email has been added to my birthday mailing list! 🚀");
-        setFormData({
-          firstName: "",
-          lastName: "",
-          birthMonth: "",
-          birthDay: "",
-          email: "",
-          phone: "",
-        });
+        setFormData({ ...initialState });
         setErrors({});
         
         // Redirect to Thank You page after 2 seconds
@@ -110,6 +133,7 @@ const BirthdayMailingList = () => {
     } catch {
       setResponseMessage("❌ Error connecting to server.");
     }
+    setLoading(false);
   };
 
   return (
@@ -125,6 +149,7 @@ const BirthdayMailingList = () => {
             value={formData.firstName}
             onChange={handleChange}
             className="w-full p-2 border rounded-md mb-2"
+            required
           />
           {errors.firstName && <p className="text-red-500 text-sm mb-2">{errors.firstName}</p>}
 
@@ -144,6 +169,7 @@ const BirthdayMailingList = () => {
               value={formData.birthMonth}
               onChange={handleChange}
               className="w-1/2 p-2 border rounded-md"
+              required
             >
               <option value="" disabled>Select Month</option>
               {months.map((month) => (
@@ -156,6 +182,7 @@ const BirthdayMailingList = () => {
               value={formData.birthDay}
               onChange={handleChange}
               className="w-1/2 p-2 border rounded-md"
+              required
             >
               <option value="" disabled>Select Day</option>
               {[...Array(getDaysInMonth(formData.birthMonth))].map((_, i) => (
@@ -173,6 +200,7 @@ const BirthdayMailingList = () => {
             value={formData.email}
             onChange={handleChange}
             className="w-full p-2 border rounded-md mb-2"
+            required
           />
           {errors.email && <p className="text-red-500 text-sm mb-2">{errors.email}</p>}
 
@@ -183,10 +211,13 @@ const BirthdayMailingList = () => {
             value={formData.phone}
             onChange={handleChange}
             className="w-full p-2 border rounded-md mb-2"
+            required
           />
           {errors.phone && <p className="text-red-500 text-sm mb-2">{errors.phone}</p>}
 
-          <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded-md mt-2 hover:bg-blue-800">Submit</button>
+          <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded-md mt-2 hover:bg-blue-800 disabled:bg-gray-400" disabled={loading}>
+            {loading ? "Submitting..." : "Submit"}
+          </button>
           <p className="text-gray-700 text-sm mt-2">By clicking &lsquo;Submit&rsquo;, you agree to receive email messages.</p>
         </form>
         <p className="text-center text-green-600 mt-2">{responseMessage}</p>
