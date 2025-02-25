@@ -8,12 +8,16 @@ const Unsubscribe = () => {
     const userId = searchParams.get("id");
     const [message, setMessage] = useState("");
 
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+    const API_KEY = import.meta.env.VITE_API_KEY;
+
     useEffect(() => {
         if (resubscribe === "true" && userId) {
-            fetch(`https://bday-787u.onrender.com/users/subscribe/${userId}`, {
+            fetch(`${API_BASE_URL}/users/subscribe/${userId}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${API_KEY}`,
                 },
             })
                 .then((res) => res.json())
@@ -32,7 +36,7 @@ const Unsubscribe = () => {
         } else {
             setMessage("An error occurred while processing your request.");
         }
-    }, [status, resubscribe, userId]);
+    }, [status, resubscribe, userId, API_KEY]);
 
     return (
         <div className="flex flex-col items-center min-h-screen bg-gray-100 px-4 py-10 sm:py-20">

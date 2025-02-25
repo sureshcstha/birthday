@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const BirthdayMailingList = () => {
   const navigate = useNavigate(); 
@@ -93,9 +94,12 @@ const BirthdayMailingList = () => {
       // Get reCAPTCHA token from Google
       const recaptchaToken = await window.grecaptcha.execute(RECAPTCHA_SITE_KEY, { action: "submit" });
 
-      const response = await fetch("https://bday-787u.onrender.com/users/add", {
+      const response = await fetch(`${API_BASE_URL}/users/add`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${import.meta.env.VITE_API_KEY}`,
+        },
         body: JSON.stringify({
           firstName: formData.firstName,
           lastName: formData.lastName,
