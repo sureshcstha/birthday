@@ -6,6 +6,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ThankYou from "./pages/ThankYou";
+import NotFound from "./pages/NotFound";
 
 function App() {
   useEffect(() => {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/unsubscribe" element={<Unsubscribe />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/thank-you" element={<ThankYou />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
         <Footer />
