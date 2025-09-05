@@ -15,6 +15,10 @@ BirthdayMails is a React web app that lets users join a birthday mailing list to
 The app is hosted on Netlify and available at:  
 [https://birthdaymails.netlify.app](https://birthdaymails.netlify.app)
 
+## 📸 Screenshots
+![Birthday mailing list form](/src/assets/birthday-mailing-list-form.jpg "This shows screenshot of birthday mailing list form")
+![Sample automated welcome and birthday emails](/src/assets/birthdayMails-email-example.jpg "This shows screenshot of a sample automated welcome and birthday emails sent from the BirthdayMails app")
+
 ## Getting Started
 
 ### Prerequisites
