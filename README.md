@@ -1,8 +1,62 @@
-# React + Vite
+# BirthdayMails 🎂
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+BirthdayMails is a React web app that lets users join a birthday mailing list to receive special birthday messages via email and SMS. Built with React 19, Vite, Tailwind CSS, and Google reCAPTCHA for spam protection.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🎉 Join the birthday mailing list with name, birthdate, email, and phone
+- 📩 Receive birthday emails and SMS
+- 🔒 Unsubscribe/resubscribe support
+- 🛡️ Google reCAPTCHA integration
+- Responsive design with Tailwind CSS
+
+## Live Demo
+
+The app is hosted on Netlify and available at:  
+[https://birthdaymails.netlify.app](https://birthdaymails.netlify.app)
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18+ recommended)
+- npm
+
+### Installation
+
+```sh
+git clone https://github.com/sureshcstha/birthday.git
+cd birthday
+npm install
+```
+
+## Environment Variables
+
+```sh
+VITE_API_BASE_URL=https://bday-787u.onrender.com
+VITE_API_KEY=your_api_key
+VITE_RECAPTCHA_SITE_KEY=your_recaptcha_site_key
+```
+
+## Project Structure
+- src/components/ – Navbar, Footer, BirthdayMailingList form
+- src/pages/ – Home, PrivacyPolicy, ThankYou, NotFound, Unsubscribe
+- public/ – Static assets and Netlify redirects
+
+## API Usage
+
+This app utilizes the [Birthday Message API ](https://github.com/sureshcstha/birthday-message-app) for all backend operations
+
+- **Endpoints Used:**
+  - `POST /users/add` — To add user to birthday mailing list
+  - `PUT /users/subscribe/:id` — To subscribe user to email and SMS
+
+## Technologies
+
+- React
+- React Router
+- Vite
+- Tailwind CSS
+
+## Author
+Developed by [Suresh Shrestha](https://www.linkedin.com/in/sureshcstha/) — feel free to reach out at sureshshr91@gmail.com
